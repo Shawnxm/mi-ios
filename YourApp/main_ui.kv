@@ -1,0 +1,66 @@
+<ScrollableLabel@ScrollView>:
+    text: ''
+    scroll_y: 0
+
+    Label:
+        text: root.text
+        text_size: self.width, None
+        size_hint_y: None
+        font_size: "12sp"
+        color: 0,0,0,1
+        height: self.texture_size[1]
+        line_height: 1
+        valign: 'bottom'
+        max_lines: 4
+        markup: True 
+
+
+# Main screen
+<MobileInsightScreen>:
+    GridLayout:
+        cols: 1
+        ScrollableLabel:
+            text: '%s' % root.error_log
+            size_hint_y: 6
+
+        Button:
+            id: selectButton
+            on_release: root.popUpMenu()
+            height: run_plugin.height
+            size: run_plugin.size
+
+        Button:
+            id: run_plugin
+            size_hint_y: 2.5
+            text: "Run Plugin"
+            font_size: "24sp"
+            on_release: root.start_service(root.selectedPlugin)
+
+        Button:
+            id: stop_plugin
+            text: 'Stop %s' % str(root.selectedPlugin)
+            #disabled: root.ids.checkbox_app.selected == ''
+            size_hint_y: 2.5
+            font_size: "24sp"
+            on_release: root.stop_service()
+
+        Button:
+            text: 'LogViewer' 
+            #disabled: root.ids.checkbox_app.selected == ''
+            size_hint_y: 2.5
+            font_size: "24sp"
+            on_release: app.manager.current = 'LogViewerScreen'; app.log_viewer_screen.onOpen()
+
+        Button:
+            text: 'Settings' 
+            #disabled: root.ids.checkbox_app.selected == ''
+            size_hint_y: 2.5
+            font_size: "24sp"
+            on_release: app.open_settings()
+
+        Button:
+            text: 'About' 
+            #disabled: root.ids.checkbox_app.selected == ''
+            size_hint_y: 2.5
+            font_size: "24sp"
+            on_release: root.about()
